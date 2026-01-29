@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>访问YouTube视频 | 简单导航页</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N8R3RJD8');</script>
+    <!-- End Google Tag Manager -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f1f1f1;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff0000, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(30, 30, 46, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title i {
+            color: #ff0000;
+        }
+        
+        .description {
+            margin-bottom: 25px;
+            color: #ccc;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: linear-gradient(90deg, #ff0000, #c4302b);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+        
+        .btn:hover {
+            background: linear-gradient(90deg, #c4302b, #ff0000);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .video-container {
+            margin-top: 20px;
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 比例 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #000;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        .note {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #ff0000;
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .content {
+                flex-direction: column;
+            }
+            
+            .card {
+                width: 100%;
+            }
+        }
+        
+        .video-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .video-info h3 {
+            margin-bottom: 10px;
+            color: #ff6b6b;
+        }
+    </style>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VLJ9F702TV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VLJ9F702TV');
+</script>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fab fa-youtube"></i> YouTube视频访问</h1>
+            <p class="subtitle">选择以下任一方式访问YouTube视频内容</p>
+        </header>
+        
+        <div class="content">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-external-link-alt"></i> 直接访问YouTube</h2>
+                <p class="description">点击下方按钮将在新标签页中打开YouTube原视频页面，您可以查看视频详情、评论和频道信息。</p>
+                
+                <a href="https://www.youtube.com/watch?v=fh1zOyVLHd0" target="_blank" class="btn">
+                    <i class="fab fa-youtube"></i> 前往YouTube观看
+                </a>
+                
+                <div class="note">
+                    <p><strong>提示：</strong> 此方法会跳转到YouTube官方网站，您可能需要合适的网络环境才能访问。</p>
+                </div>
+                
+                <div class="video-info">
+                    <h3>视频信息</h3>
+                    <p><strong>视频ID：</strong> fh1zOyVLHd0</p>
+                    <p><strong>访问方式：</strong> 外部链接</p>
+                    <p><strong>平台：</strong> YouTube</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-play-circle"></i> 嵌入式播放器</h2>
+                <p class="description">直接在下方播放器中观看视频，无需离开本页面。某些地区可能需要合适的网络环境才能加载。</p>
+                
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/fh1zOyVLHd0" 
+                            title="YouTube视频播放器" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                
+                <div class="note">
+                    <p><strong>提示：</strong> 如果视频无法加载，可能是由于网络限制，请尝试使用上方的"直接访问YouTube"按钮。</p>
+                </div>
+                
+                <div class="video-info">
+                    <h3>播放器功能</h3>
+                    <p><strong>支持功能：</strong> 全屏播放、画中画、调整画质、字幕等</p>
+                    <p><strong>优点：</strong> 无需离开本页面即可观看</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>本页面仅供访问YouTube视频使用 | 视频来源：YouTube | 设计：简单访问页</p>
+            <p>视频链接：https://www.youtube.com/watch?v=fh1zOyVLHd0</p>
+        </footer>
+    </div>
+
+    <script>
+        // 添加一些简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为所有按钮添加点击效果
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if(this.getAttribute('href') === 'https://www.youtube.com/watch?v=fh1zOyVLHd0') {
+                        // 如果是前往YouTube的按钮，显示提示
+                        if(!confirm("您将离开本页面，前往YouTube观看视频。确定继续吗？")) {
+                            e.preventDefault();
+                        }
+                    }
+                });
+            });
+            
+            // 检查iframe是否加载成功
+            const iframe = document.querySelector('iframe');
+            iframe.addEventListener('load', function() {
+                console.log('YouTube嵌入播放器加载完成');
+            });
+            
+            iframe.addEventListener('error', function() {
+                console.log('YouTube嵌入播放器加载失败');
+                const videoContainer = document.querySelector('.video-container');
+                const errorMsg = document.createElement('div');
+                errorMsg.innerHTML = '<p style="color:#ff6b6b; padding:20px; text-align:center;">视频加载失败，请尝试直接访问YouTube</p>';
+                videoContainer.appendChild(errorMsg);
+            });
+        });
+    </script>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N8R3RJD8"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+</body>
+</html>
